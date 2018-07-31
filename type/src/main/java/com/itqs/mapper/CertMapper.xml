@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itqs.mapper.CertMapper">
+
+	<resultMap type="com.itqs.entity.Cert" id="certinfo">
+		<id property="cid" column="id"/>
+		<result property="cname" column="NAME"/>
+	</resultMap>
+	<!-- public List<Cert> findAll_cert(); -->
+	<select id="findAll_cert" resultMap="certinfo">
+		select * from t_cert 
+	</select>
+</mapper>
