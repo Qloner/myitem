@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itqs.mapper.T_certMapper">	
+
+	<resultMap type="com.itqs.entity.T_cert" id="certinfo">
+		<id property="id" column="id"/>
+		<result property="name" column="NAME"/>
+	</resultMap>
+	
+	<!-- public List<T_cert> listPage(Map<String, Object> map); -->
+	<select id="listPage" resultMap="certinfo">
+		select * from t_cert 
+		<where>
+			<if test="value1!=''" >
+				NAME like '%${value1}%' 
+			</if>
+		</where>						
+		limit #{m},#{n}
+	</select>
+	
+	<!-- public void addT_cert(T_cert t); -->
+	<insert id="addT_cert">
+		insert into t_cert values(null,#{name}) 		
+	</insert>
+	
+	<!-- public void delT_cert(int id); -->
+	<delete id="delT_cert">
+		delete from t_cert where id=#{value}
+	</delete>
+	
+	<!-- public void delones(String[] ids); -->
+	<delete id="delones">
+		delete from t_cert where id in
+		<foreach collection="array" open="(" separator="," close=")" item="i">
+				#{i}
+		</foreach>		
+	</delete>
+	
+	<!-- public void updateT_cert(T_cert t); -->
+	<update id="updateT_cert">
+		update t_cert set NAME=#{name} where id=#{id}
+	</update>
+	
+	<!-- public T_cert getOne(int id); -->
+	<select id="getOne" resultMap="certinfo">
+		select * from t_cert where id=#{value}
+	</select>
+	
+	<!-- public T_cert getOnes(String[] ids); -->
+	<select id="getOnes" resultMap="certinfo">
+		select * from t_cert where id in
+		<foreach collection="array" open="(" separator="," close=")" item="i">
+				#{i}
+		</foreach>
+	</select>
+	
+	<!-- public int getT_certCount(String queryName); -->
+	<select id="getT_certCount" resultType="int">
+		select count(id) from t_cert where NAME like '%${value}%'
+	</select>
+</mapper>
